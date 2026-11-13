@@ -106,6 +106,17 @@
     }
   }
 
+  // HTML escaping helper to prevent XSS in dynamic fallback rendering
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // Dynamic card renderer (fallback if DOM is not pre-rendered)
   function renderCards(products) {
     if (!productGrid) return;
@@ -118,8 +129,8 @@
       card.setAttribute('data-title', p.title);
       card.setAttribute('data-price', p.price);
 
-      const safeTitle = (p.title || '').replace(/"/g, '&quot;');
-      const safePrice = p.price || '';
+      const safeTitle = escapeHtml(p.title || '');
+      const safePrice = escapeHtml(p.price || '');
       const safeLink = p.affiliate_link || '#';
       const safeImg = p.image_path || 'images/placeholder.jpg';
 
@@ -147,7 +158,7 @@
             href="${safeLink}" 
             class="btn-cta" 
             target="_blank" 
-            rel="noopener noreferrer"
+            rel="noopener"
             aria-label="Ver ${safeTitle} na Shopee"
           >
             <span class="btn-text">Ver na Shopee</span>
