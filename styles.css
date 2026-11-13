@@ -1,0 +1,592 @@
+/* ==========================================================================
+   Shopee Link-in-Bio Design System & Mobile UX Stylesheet
+   Brand Token: #EE4D2D (Shopee Official)
+   ========================================================================== */
+
+/* 1. CSS Custom Properties / Design Tokens */
+:root {
+  --color-primary: #EE4D2D;
+  --color-primary-hover: #D73211;
+  --color-primary-active: #BF2608;
+  --color-primary-light: #FFF0ED;
+  --color-primary-border: #FFD5CC;
+  --color-primary-focus: rgba(238, 77, 45, 0.35);
+
+  --color-bg-page: #F6F7F9;
+  --color-bg-card: #FFFFFF;
+  --color-bg-subtle: #F1F3F5;
+
+  --color-text-main: #191B1F;       /* Contrast ratio > 14:1 on white (WCAG AAA) */
+  --color-text-muted: #59616D;      /* Contrast ratio > 4.6:1 on white (WCAG AA) */
+  --color-text-subtle: #7A8494;
+  --color-text-on-primary: #FFFFFF; /* High contrast bold text */
+
+  --color-border: #E5E7EB;
+  --color-border-subtle: #F0F2F5;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(238, 77, 45, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-sticky: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --max-width-page: 680px;
+  --min-touch-target: 48px;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-page);
+  color: var(--color-text-main);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  background-color: var(--color-bg-page);
+  display: flex;
+  justify-content: center;
+}
+
+/* Skip link for screen reader & keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid #191B1F;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 3. Page Layout Container */
+.page-wrapper {
+  width: 100%;
+  max-width: var(--max-width-page);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 32px 16px;
+}
+
+/* 4. Profile Header */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 8px 16px 8px;
+}
+
+.avatar-container {
+  margin-bottom: 12px;
+}
+
+.avatar-frame {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-primary), #FF7337);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(238, 77, 45, 0.35);
+  border: 3px solid #FFFFFF;
+}
+
+.avatar-icon {
+  width: 44px;
+  height: 44px;
+  color: #FFFFFF;
+}
+
+.profile-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.25;
+}
+
+.badge-verified {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
+}
+
+.badge-verified svg {
+  width: 13px;
+  height: 13px;
+}
+
+.profile-handle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: 2px;
+}
+
+.profile-bio {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  max-width: 440px;
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+.social-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.social-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-primary-border);
+}
+
+/* 5. Sticky Search Bar */
+.sticky-search-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(246, 247, 249, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 0 12px 0;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-subtle);
+  pointer-events: none;
+}
+
+#productSearch {
+  width: 100%;
+  min-height: var(--min-touch-target);
+  height: 48px;
+  font-size: 1rem; /* >= 16px prevents iOS Safari automatic zoom */
+  font-family: inherit;
+  color: var(--color-text-main);
+  background-color: var(--color-bg-card);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 46px 0 44px;
+  outline: none;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-appearance: none;
+}
+
+#productSearch:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
+}
+
+#productSearch::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.btn-clear-search {
+  position: absolute;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-full);
+}
+
+.btn-clear-search:hover,
+.btn-clear-search:focus-visible {
+  color: var(--color-text-main);
+  background-color: var(--color-bg-subtle);
+}
+
+.btn-clear-search svg {
+  width: 20px;
+  height: 20px;
+}
+
+.search-stats {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding-left: 4px;
+}
+
+/* 6. Main Product Feed & Cards */
+.main-content {
+  flex: 1;
+  margin-top: 14px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.product-card:focus-within {
+  border-color: var(--color-primary);
+}
+
+.card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-bg-subtle);
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.product-card:hover .card-image {
+  transform: scale(1.02);
+}
+
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7em;
+}
+
+.card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-prefix {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.card-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+}
+
+/* 7. CTA Button (Affiliate Outbound) */
+.btn-cta {
+  width: 100%;
+  min-height: 48px;
+  height: 48px;
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(238, 77, 45, 0.3);
+  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-cta:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 4px 14px rgba(238, 77, 45, 0.4);
+}
+
+.btn-cta:active {
+  background-color: var(--color-primary-active);
+  transform: scale(0.99);
+}
+
+.btn-cta:focus-visible {
+  outline: 3px solid #191B1F;
+  outline-offset: 2px;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Hidden helper class for search filtering */
+.is-hidden {
+  display: none !important;
+}
+
+/* 8. Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 16px;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  border: 1.5px dashed var(--color-border);
+  margin-top: 12px;
+}
+
+.empty-state-icon {
+  width: 56px;
+  height: 56px;
+  color: var(--color-text-subtle);
+  margin-bottom: 12px;
+}
+
+.empty-state-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 6px;
+}
+
+.empty-state-text {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  max-width: 340px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.btn-reset-search {
+  min-height: 48px;
+  height: 48px;
+  padding: 0 24px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-reset-search:hover,
+.btn-reset-search:focus-visible {
+  background-color: #FFE4DC;
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 9. Footer */
+.profile-footer {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-disclosure {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  max-width: 480px;
+}
+
+.footer-copy {
+  font-size: 0.74rem;
+  color: var(--color-text-subtle);
+}
+
+.back-to-top {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  text-decoration: underline;
+  outline: 2px solid var(--color-primary);
+}
+
+/* 10. Responsive Breakpoints */
+/* Mobile Compact (<= 400px, e.g. iPhone SE, Galaxy A) */
+@media (max-width: 400px) {
+  .page-wrapper {
+    padding: 0 12px 24px 12px;
+  }
+  .sticky-search-wrapper {
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .card-body {
+    padding: 12px;
+  }
+  .card-price {
+    font-size: 1.2rem;
+  }
+}
+
+/* Tablet & Desktop (>= 580px) */
+@media (min-width: 580px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .card-body {
+    padding: 14px;
+  }
+}
+
+/* Reduced Motion Mode for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .product-card:hover {
+    transform: none;
+  }
+  .product-card:hover .card-image {
+    transform: none;
+  }
+}
